@@ -2,27 +2,41 @@
 
 var p = require("postcss-selector-parser");
 
-exports["ie11plus"] = {
-    type : "selector",
-    // _:-ms-fullscreen, :root <selector>
-    fn   : (node) => p.root()
-        .append([
+function pseudo(version, selector, fn) {
+    if(typeof version === "string") {
+        version = new RegExp(version);
+    }
+    
+    return p((selectors) =>
+        selectors.walkPseudos((node) => {
+            var name = node.value.slice(1);
+            
+            if(name.search(version) === -1) {
+                return;
+            }
+            
+            node.replaceWith(fn(node.nodes));
+        })
+    ).process(selector).result
+}
+
+// _:-ms-fullscreen, :root <selector>
+exports["ie11plus"] = (rule) => {
+    rule.selector = pseudo(/ie11|ie11plus/, rule.selector, (node) =>
+        p.root().append([
             p.string({ value : "_:-ms-fullscreen" }),
             p.string({ value : `:root ${node.toString()}` })
         ])
+    );
 };
 
 exports["ie11"] = exports["ie11plus"];
 
-exports["ie10plus"] = {
-    type : "selector",
-    // _:-ms-lang(x), <selector>
-    fn   : (node) => p.root()
-        .append([
-            p.string({ value : "_:-ms-lang(x)" }),
-            node.toString()
-        ])
-};
+// _:-ms-lang(x), <selector>
+exports["ie10plus"] = (node) => p.root().append([
+    p.string({ value : "_:-ms-lang(x)" }),
+    node.toString()
+]);
 
 exports["ie10"] = exports["ie10plus"];
 
@@ -34,13 +48,10 @@ exports["ie10"] = exports["ie10plus"];
 // }`
 // };
 
-// exports["ie9"] = {
-//     type : "media",
-//     tmpl : `/* IE 9 Hack */
-// @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
-//     <%- declarations %>
-// }`
-// };
+// @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) { <decls> }
+exports["ie9"] = (node) => p.root().append(
+    p.string({ value : `@ie9 ${node.toString()}` })
+);
 
 // exports["ie8910"] = {
 //     type : "media",

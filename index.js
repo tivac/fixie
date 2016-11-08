@@ -5,20 +5,12 @@ var postcss = require("postcss"),
     
     hacks = require("./hacks.js"),
 
-    transform = parser((selectors) =>
-        selectors.walkPseudos((node) => {
-            var name = node.value.slice(1);
-            
-            if(!hacks[name] || hacks[name].type !== "selector") {
-                return;
-            }
-            
-            node.replaceWith(hacks[name].fn(node.nodes));
-        })
-    );
+    search = new RegExp(":(" + Object.keys(hacks).join(")|:(") + ")");
 
 module.exports = postcss.plugin("postcss-fixie", () => (css, result) => {
-    css.walkRules((rule) => {
-        rule.selector = transform.process(rule.selector).result;
+    css.walkRules(search, (rule) => {
+        var version = rule.selector.match(search)[0].substring(1);
+
+        hacks[version](rule);
     });
 });
