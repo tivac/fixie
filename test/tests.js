@@ -63,5 +63,41 @@ _:-ms-fullscreen,:root  .fooga .booga {
 }`
             )
         );
+
+        it("should transform :ie9(...) into an ie9 hack (multiple selectors)", () =>
+            test(
+                ":ie9(.fooga .booga) { color: red; }",
+                `
+@media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
+    .fooga .booga {
+        color: red
+    }
+}`
+            )
+        );
+        
+        it("should transform :ie9 ... into an ie9 hack (single selector)", () =>
+            test(
+                ":ie9 .fooga { color: red; }",
+                `
+@media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
+     .fooga {
+        color: red
+    }
+}`
+            )
+        );
+
+        it("should transform :ie9 ... into an ie9 hack (multiple selectors)", () =>
+            test(
+                ":ie9 .fooga .booga { color: red; }",
+                `
+@media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
+     .fooga .booga {
+        color: red
+    }
+}`
+            )
+        );
     });
 });
