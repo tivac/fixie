@@ -1,13 +1,14 @@
 "use strict";
 
-var p = require("postcss-selector-parser");
+var postcss  = require("postcss"),
+    parser = require("postcss-selector-parser");
 
 function pseudo(version, selector, fn) {
     if(typeof version === "string") {
         version = new RegExp(version);
     }
     
-    return p((selectors) =>
+    return parser((selectors) =>
         selectors.walkPseudos((node) => {
             var name = node.value.slice(1);
             
@@ -15,7 +16,7 @@ function pseudo(version, selector, fn) {
                 return;
             }
             
-            node.replaceWith(fn(node.nodes));
+            node.replaceWith(fn ? fn(node.nodes) : node.nodes);
         })
     ).process(selector).result
 }
@@ -23,22 +24,24 @@ function pseudo(version, selector, fn) {
 // _:-ms-fullscreen, :root <selector>
 exports["ie11plus"] = (rule) => {
     rule.selector = pseudo(/ie11|ie11plus/, rule.selector, (node) =>
-        p.root().append([
-            p.string({ value : "_:-ms-fullscreen" }),
-            p.string({ value : `:root ${node.toString()}` })
+        parser.root().append([
+            parser.string({ value : "_:-ms-fullscreen" }),
+            parser.string({ value : `:root ${node.toString()}` })
         ])
     );
+
+    return rule;
 };
 
 exports["ie11"] = exports["ie11plus"];
 
 // _:-ms-lang(x), <selector>
-exports["ie10plus"] = (node) => p.root().append([
-    p.string({ value : "_:-ms-lang(x)" }),
-    node.toString()
-]);
+// exports["ie10plus"] = (node) => parser.root().append([
+//     parser.string({ value : "_:-ms-lang(x)" }),
+//     node.toString()
+// ]);
 
-exports["ie10"] = exports["ie10plus"];
+// exports["ie10"] = exports["ie10plus"];
 
 // exports["ie9plus"] = {
 //     type : "media",
@@ -49,9 +52,18 @@ exports["ie10"] = exports["ie10plus"];
 // };
 
 // @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) { <decls> }
-exports["ie9"] = (node) => p.root().append(
-    p.string({ value : `@ie9 ${node.toString()}` })
-);
+exports["ie9"] = (rule) => {
+    var media = postcss.atRule({
+            name   : "media",
+            params : "screen and (min-width:0\\0) and (min-resolution: .001dpcm)"
+        });
+
+    rule.selector = pseudo("ie9", rule.selector);
+
+    media.append(rule);
+    
+    return media;
+};
 
 // exports["ie8910"] = {
 //     type : "media",
