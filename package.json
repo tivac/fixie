@@ -1,0 +1,12 @@
+{
+  "name": "postcss-fixie",
+  "version": "0.0.1",
+  "description": "Simple functions to use IE-specific CSS hacks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [ "postcss", "ie", "internet-explorer", "hacks"],
+  "author": "Pat Cavit <npm@patcavit.com>",
+  "license": "MIT"
+}
