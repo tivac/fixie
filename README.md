@@ -15,7 +15,6 @@ The hacks used come from [this excellent Stack Overflow answer](http://stackover
 }
 
 // becomes
-```css
 .fooga {
     font-size: 1em;
 }
