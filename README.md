@@ -14,7 +14,7 @@ The hacks used come from [this excellent Stack Overflow answer](http://stackover
     }
 }
 
-// becomes
+/* becomes */
 .fooga {
     font-size: 1em;
 }
