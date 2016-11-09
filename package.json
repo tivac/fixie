@@ -1,6 +1,6 @@
 {
   "name": "postcss-fixie",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Simple functions to use IE-specific CSS hacks",
   "main": "index.js",
   "repository": "tivac/fixie",
