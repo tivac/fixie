@@ -9,6 +9,7 @@
   },
   "keywords": [
     "postcss",
+    "postcss-plugin",
     "ie",
     "internet-explorer",
     "hacks"
