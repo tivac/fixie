@@ -55,6 +55,25 @@ exports["ie10plus"] = (rule) => {
 
 exports["ie10"] = exports["ie10plus"];
 
+// @media screen and (min-width:0\0) { <prop>: <value>\9 }
+exports["ie910"] = (rule) => {
+    var media = postcss.atRule({
+            name   : "media",
+            params : "screen and (min-width:0\\0)"
+        });
+
+    strip(rule, "ie910");
+
+    rule.walkDecls((decl) => {
+        decl.value += "\\9";
+    });
+
+    media.append(rule);
+    
+    return media;
+};
+
+
 // @media screen and (min-width:0\0) and (min-resolution: +72dpi) { <declarations> }
 exports["ie9plus"] = (rule) => {
     var media = postcss.atRule({

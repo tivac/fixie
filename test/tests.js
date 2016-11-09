@@ -78,6 +78,43 @@ describe("postcss-fixie", function() {
         );
     });
 
+    describe(":ie910", function() {
+        it("should transform :ie910(...) into an ie910 (single selector)", () =>
+            test(
+                ":ie910(.fooga) { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) {
+                    .fooga {
+                        color: red\\9
+                    }
+                }`
+            )
+        );
+
+        it("should transform :ie910(...) into an ie910 (multiple selectors)", () =>
+            test(
+                ":ie910(.fooga .booga) { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) {
+                    .fooga .booga {
+                        color: red\\9
+                    }
+                }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie910(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                @media screen and (min-width:0\\0) {
+                 .fooga { color: blue\\9; } }`,
+                nested
+            )
+        );
+    });
+
     describe(":ie9plus", function() {
         it("should transform :ie9plus(...) into an ie9plus hack (single selector)", () =>
             test(
