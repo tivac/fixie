@@ -36,12 +36,19 @@ exports["ie11plus"] = (rule) => {
 exports["ie11"] = exports["ie11plus"];
 
 // _:-ms-lang(x), <selector>
-// exports["ie10plus"] = (node) => parser.root().append([
-//     parser.string({ value : "_:-ms-lang(x)" }),
-//     node.toString()
-// ]);
+exports["ie10plus"] = (rule) => {
+    rule.selector = pseudo(/ie10|ie10plus/, rule.selector, (node) =>
+        parser.root().append([
+            parser.string({ value : "_:-ms-lang(x)" }),
+            node
+        ])
+    );
 
-// exports["ie10"] = exports["ie10plus"];
+    return rule;
+};
+
+
+exports["ie10"] = exports["ie10plus"];
 
 // exports["ie9plus"] = {
 //     type : "media",

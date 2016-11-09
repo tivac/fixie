@@ -51,6 +51,48 @@ _:-ms-fullscreen,:root  .fooga .booga {
         );
     });
 
+    describe(":ie10", function() {
+        it("should transform :ie10(...) into an ie10 hack (single selector)", () =>
+            test(
+                ":ie10(.fooga) { color: red; }",
+                `
+_:-ms-lang(x),.fooga {
+    color: red
+}`
+            )
+        );
+
+        it("should transform :ie10(...) into an ie10 hack (multiple selectors)", () =>
+            test(
+                ":ie10(.fooga .wooga) { color: red; }",
+                `
+_:-ms-lang(x),.fooga .wooga {
+    color: red
+}`
+            )
+        );
+
+        it("should transform :ie10 ... into an ie10 hack (single selector)", () =>
+            test(
+                ":ie10 .fooga { color: red; }",
+                `
+_:-ms-lang(x), .fooga {
+    color: red
+}`
+            )
+        );
+        
+        it("should transform :ie10 ... into an ie10 hack (multiple selectors)", () =>
+            test(
+                ":ie10 .fooga .booga { color: red; }",
+                `
+_:-ms-lang(x), .fooga .booga {
+    color: red
+}`
+            )
+        );
+    });
+
     describe(":ie9", function() {
         it("should transform :ie9(...) into an ie9 hack (single selector)", () =>
             test(
