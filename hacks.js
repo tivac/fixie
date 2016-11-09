@@ -4,23 +4,17 @@ var postcss  = require("postcss"),
     parser = require("postcss-selector-parser");
 
 function strip(rule, version, fn) {
-    var transform;
-    
-    if(typeof version === "string") {
-        version = new RegExp(version);
-    }
-    
-    transform = parser((selectors) =>
-        {selectors.walkPseudos((node) => {
-            var name = node.value.slice(1);
-            
-            if(name.search(version) === -1) {
-                return;
-            }
-            
-            node.replaceWith(fn ? fn(node.nodes) : node.nodes);
-        })}
-    );
+    var transform = parser((selectors) =>
+            selectors.walkPseudos((node) => {
+                var name = node.value.slice(1);
+                
+                if(name !== version) {
+                    return;
+                }
+                
+                node.replaceWith(fn ? fn(node.nodes) : node.nodes);
+            })
+        );
     
     rule.selector = transform.process(rule.selector).result;
 }
@@ -28,8 +22,8 @@ function strip(rule, version, fn) {
 // Hacks are all sourced from http://stackoverflow.com/a/20541859/7847
 
 // _:-ms-fullscreen, :root <selector>
-exports["ie11plus"] = (rule) => {
-    strip(rule, /ie11|ie11plus/, (node) =>
+exports["ie11"] = (rule) => {
+    strip(rule, "ie11", (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-fullscreen" }),
             parser.string({ value : `:root ${node.toString()}` })
@@ -39,11 +33,9 @@ exports["ie11plus"] = (rule) => {
     return rule;
 };
 
-exports["ie11"] = exports["ie11plus"];
-
 // _:-ms-lang(x), <selector>
 exports["ie10plus"] = (rule) => {
-    strip(rule, /ie10|ie10plus/, (node) =>
+    strip(rule, "ie10plus", (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-lang(x)" }),
             node
@@ -53,7 +45,22 @@ exports["ie10plus"] = (rule) => {
     return rule;
 };
 
-exports["ie10"] = exports["ie10plus"];
+// _:-ms-lang(x), <selector> { <prop>: <value>\9 }
+exports["ie10"] = (rule) => {
+   strip(rule, "ie10", (node) =>
+        parser.root().append([
+            parser.string({ value : "_:-ms-lang(x)" }),
+            node
+        ])
+    );
+
+    rule.walkDecls((decl) => {
+        decl.value += "\\9";
+    });
+
+    return rule;
+};
+
 
 // @media screen and (min-width:0\0) { <prop>: <value>\9 }
 exports["ie910"] = (rule) => {
@@ -72,7 +79,6 @@ exports["ie910"] = (rule) => {
     
     return media;
 };
-
 
 // @media screen and (min-width:0\0) and (min-resolution: +72dpi) { <declarations> }
 exports["ie9plus"] = (rule) => {
@@ -118,13 +124,16 @@ exports["ie8910"] = (rule) => {
 
 // html>/**/body <selector>
 exports["ie8"] = (rule) => {
-    strip(rule, "ie8", (node) =>
-        parser.root().append(
-            parser.string({ value : `html>/**/body ${node}` })
-        )
-    );
+    var media = postcss.atRule({
+            name   : "media",
+            params : "\\0screen"
+        });
+
+    strip(rule, "ie8");
+
+    media.append(rule);
     
-    return rule;
+    return media;
 };
 
 

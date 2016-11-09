@@ -46,10 +46,10 @@ describe("postcss-fixie", function() {
         );
     });
 
-    describe(":ie10", function() {
-        it("should transform :ie10(...) into an ie10 hack (single selector)", () =>
+    describe(":ie10plus", function() {
+        it("should transform :ie10plus(...) into an ie10plus hack (single selector)", () =>
             test(
-                ":ie10(.fooga) { color: red; }",
+                ":ie10plus(.fooga) { color: red; }",
                 strip`
                 _:-ms-lang(x),.fooga {
                     color: red
@@ -57,9 +57,9 @@ describe("postcss-fixie", function() {
             )
         );
 
-        it("should transform :ie10(...) into an ie10 hack (multiple selectors)", () =>
+        it("should transform :ie10plus(...) into an ie10plus hack (multiple selectors)", () =>
             test(
-                ":ie10(.fooga .wooga) { color: red; }",
+                ":ie10plus(.fooga .wooga) { color: red; }",
                 strip`
                 _:-ms-lang(x),.fooga .wooga {
                     color: red
@@ -69,10 +69,42 @@ describe("postcss-fixie", function() {
 
         it("should work with postcss-nested", () =>
             test(
-                ".fooga { color: red; :ie10(&) { color: blue; } }",
+                ".fooga { color: red; :ie10plus(&) { color: blue; } }",
                 strip`
                 .fooga { color: red; }
                 _:-ms-lang(x),.fooga { color: blue; }`,
+                nested
+            )
+        );
+    });
+
+    describe(":ie10", function() {
+        it("should transform :ie10(...) into an ie10 hack (single selector)", () =>
+            test(
+                ":ie10(.fooga) { color: red; }",
+                strip`
+                _:-ms-lang(x),.fooga {
+                    color: red\\9
+                }`
+            )
+        );
+
+        it("should transform :ie10(...) into an ie10 hack (multiple selectors)", () =>
+            test(
+                ":ie10(.fooga .wooga) { color: red; }",
+                strip`
+                _:-ms-lang(x),.fooga .wooga {
+                    color: red\\9
+                }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie10(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                _:-ms-lang(x),.fooga { color: blue\\9; }`,
                 nested
             )
         );
@@ -227,22 +259,26 @@ describe("postcss-fixie", function() {
     });
 
     describe(":ie8", function() {
-        it("should transform :ie8(...) into an ie78hack (single selector)", () =>
+        it("should transform :ie8(...) into an ie8 hack (single selector)", () =>
             test(
                 ":ie8(.fooga) { color: red; }",
                 strip`
-                html>/**/body .fooga {
-                    color: red
+                @media \\0screen {
+                    .fooga {
+                        color: red
+                    }
                 }`
             )
         );
 
-        it("should transform :ie8(...) into an ie78hack (multiple selectors)", () =>
+        it("should transform :ie8(...) into an ie8 hack (multiple selectors)", () =>
             test(
                 ":ie8(.fooga .booga) { color: red; }",
                 strip`
-                html>/**/body .fooga .booga {
-                    color: red
+                @media \\0screen {
+                    .fooga .booga {
+                        color: red
+                    }
                 }`
             )
         );
@@ -252,7 +288,8 @@ describe("postcss-fixie", function() {
                 ".fooga { color: red; :ie8(&) { color: blue; } }",
                 strip`
                 .fooga { color: red; }
-                html>/**/body .fooga { color: blue; }`,
+                @media \\0screen {
+                 .fooga { color: blue; } }`,
                 nested
             )
         );
