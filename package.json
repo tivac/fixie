@@ -15,10 +15,21 @@
   "author": "Pat Cavit <npm@patcavit.com>",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^3.1.2",
-    "postcss": "^5.2.5"
+    "eslint-config-arenanet": "^3.0.1",
+    "mocha": "^3.1.2"
   },
   "dependencies": {
+    "postcss": "^5.2.5",
     "postcss-selector-parser": "^2.2.1"
+  },
+  "eslintConfig": {
+    "extends": "arenanet",
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "rules": {
+      "no-param-reassign": 0
+    }
   }
 }
