@@ -1,0 +1,17 @@
+sudo: false
+language: node_js
+node_js:
+- node
+- '6'
+- '4'
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: npm
+  email: npm@patcavit.com
+  api_key:
+    secure: QqCR5irj1RVCobC+kJ9OGeDQQWM6lzOLGUP9twAccGFqVGD+mHJlZ9EgvpG+LAFkja7wm3qLMF6rN504bNtKJYlgRuIkryvgS4Lgxv25fx2MWmnHETtzJpAh8ZzUffbi6KJ+4NT/XTYoOLYAPpl1upymUkHOhu42Q2gHRd9GkXKApD+Kb2xijK8u9MSrX1ulWwFn+y4nnKzNi7HsIF45oz53HZCUR+mT89rQaiqYyR5zeKC0fwHu1QywDKMzcNopsJNLusfMem56+OyXuZDelOc3h4Ni+9f9zexkKRHcbU+NAsMzStQkqQmWX5gCYVZaEXicPfTZ/4SW1vvUC1dcNRChoUwW6E+z88NJAj+KZWxXNtLoYGob1GA8aF4Rho3g/NolCj2aC1t7Xa3e1Q2e+8Fwu3r1dhR4u+yLyBKFnwMcoyU07KJ2PUbYVtB7XE0zcqOD0odcI3oKsUc5xRNiNoTfKJKvIIhAAUELVwM6GmJ2IJ7yVdGwfQhUwo7t94C0Q3GI/41tnM4Yd7SikISQ3Whjo/h3FRdIWmKgZEOzwTL5zOMW6cup2vJ4WC/cdiocx8ShwLkovALwvcSyQntC8AR9C0lNlWXp9KEM0XVEQy4sLzzR+30L8t1bdQtWYzxNcavN21c01QRLr7DPRPapHfW5i9K3GoRYQbaKRi102NA=
+  on:
+    tags: true
+    repo: tivac/fixie
