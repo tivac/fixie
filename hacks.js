@@ -53,7 +53,6 @@ exports["ie10plus"] = (rule) => {
     return rule;
 };
 
-
 exports["ie10"] = exports["ie10plus"];
 
 // @media screen and (min-width:0\0) and (min-resolution: +72dpi) { <declarations> }
@@ -103,10 +102,16 @@ exports["ie8910"] = (rule) => {
 //     tmpl : `/* IE 8 Hack */ html>/**/body <%- selector %>`
 // };
 
-// exports["ie7"] = {
-//     type : "selector",
-//     tmpl : `/* IE 7 Hack */ *+html <%- selector %>`
-// };
+// *+html <selector>
+exports["ie7"] = (rule) => {
+    strip(rule, "ie7", (node) =>
+        parser.root().append(
+            parser.string({ value : `*+html ${node}` })
+        )
+    );
+    
+    return rule;
+};
 
 // @media @media \0screen\,screen\9 { { <decls> }
 exports["ie678"] = (rule) => {

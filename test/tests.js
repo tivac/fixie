@@ -133,6 +133,28 @@ describe("postcss-fixie", function() {
         );
     });
 
+     describe(":ie7", function() {
+        it("should transform :ie7(...) into an ie7 hack (single selector)", () =>
+            test(
+                ":ie7(.fooga) { color: red; }",
+                strip`
+                *+html .fooga {
+                    color: red
+                }`
+            )
+        );
+
+        it("should transform :ie7(...) into an ie7 hack (multiple selectors)", () =>
+            test(
+                ":ie7(.fooga .booga) { color: red; }",
+                strip`
+                *+html .fooga .booga {
+                    color: red
+                }`
+            )
+        );
+    });
+
     describe(":ie678", function() {
         it("should transform :ie678(...) into an ie678 hack (single selector)", () =>
             test(
