@@ -2,13 +2,16 @@
 
 var assert = require("assert"),
 
-    strip = require("common-tags").stripIndent,
+    postcss = require("postcss"),
+    strip   = require("common-tags").stripIndent,
 
-    plugin = require("../index.js");
+    plugin = require("../index.js"),
+    
+    nested = postcss([ require("postcss-nested"), plugin ]);
 
 describe("postcss-fixie", function() {
-    function test(css, expected) {
-        return plugin.process(css).then((out) => assert.equal(out.css, expected));
+    function test(css, expected, thing) {
+        return (thing || plugin).process(css).then((out) => assert.equal(out.css, expected));
     }
     
     describe(":ie11", function() {
@@ -31,6 +34,16 @@ describe("postcss-fixie", function() {
                 }`
             )
         );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie11(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                _:-ms-fullscreen,:root .fooga { color: blue; }`,
+                nested
+            )
+        );
     });
 
     describe(":ie10", function() {
@@ -51,6 +64,16 @@ describe("postcss-fixie", function() {
                 _:-ms-lang(x),.fooga .wooga {
                     color: red
                 }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie10(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                _:-ms-lang(x),.fooga { color: blue; }`,
+                nested
             )
         );
     });
@@ -79,6 +102,17 @@ describe("postcss-fixie", function() {
                 }`
             )
         );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie9plus(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
+                 .fooga { color: blue; } }`,
+                nested
+            )
+        );
     });
 
     describe(":ie9", function() {
@@ -103,6 +137,17 @@ describe("postcss-fixie", function() {
                         color: red
                     }
                 }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie9(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
+                 .fooga { color: blue; } }`,
+                nested
             )
         );
     });
@@ -131,6 +176,17 @@ describe("postcss-fixie", function() {
                 }`
             )
         );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie8910(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                @media screen\\0 {
+                 .fooga { color: blue; } }`,
+                nested
+            )
+        );
     });
 
      describe(":ie7", function() {
@@ -151,6 +207,16 @@ describe("postcss-fixie", function() {
                 *+html .fooga .booga {
                     color: red
                 }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie7(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                *+html .fooga { color: blue; }`,
+                nested
             )
         );
     });
@@ -177,6 +243,17 @@ describe("postcss-fixie", function() {
                         color: red
                     }
                 }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie678(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                @media \\0screen\\,screen\\9 {
+                 .fooga { color: blue; } }`,
+                nested
             )
         );
     });
@@ -212,6 +289,16 @@ describe("postcss-fixie", function() {
                 }`
             )
         );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie67(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                .fooga { *color: blue; }`,
+                nested
+            )
+        );
     });
 
     describe(":ie6", function() {
@@ -243,6 +330,16 @@ describe("postcss-fixie", function() {
                     _color: red;
                     _background: blue
                 }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie6(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                .fooga { _color: blue; }`,
+                nested
             )
         );
     });
