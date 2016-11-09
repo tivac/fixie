@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "Simple functions to use IE-specific CSS hacks",
   "main": "index.js",
+  "repository": "tivac/fixie",
   "scripts": {
     "test": "mocha"
   },
