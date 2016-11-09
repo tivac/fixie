@@ -97,10 +97,17 @@ exports["ie8910"] = (rule) => {
     return media;
 };
 
-// exports["ie8"] = {
-//     type : "selector",
-//     tmpl : `/* IE 8 Hack */ html>/**/body <%- selector %>`
-// };
+// html>/**/body <selector>
+exports["ie8"] = (rule) => {
+    strip(rule, "ie8", (node) =>
+        parser.root().append(
+            parser.string({ value : `html>/**/body ${node}` })
+        )
+    );
+    
+    return rule;
+};
+
 
 // *+html <selector>
 exports["ie7"] = (rule) => {

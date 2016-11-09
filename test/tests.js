@@ -189,7 +189,39 @@ describe("postcss-fixie", function() {
         );
     });
 
-     describe(":ie7", function() {
+    describe(":ie8", function() {
+        it("should transform :ie8(...) into an ie78hack (single selector)", () =>
+            test(
+                ":ie8(.fooga) { color: red; }",
+                strip`
+                html>/**/body .fooga {
+                    color: red
+                }`
+            )
+        );
+
+        it("should transform :ie8(...) into an ie78hack (multiple selectors)", () =>
+            test(
+                ":ie8(.fooga .booga) { color: red; }",
+                strip`
+                html>/**/body .fooga .booga {
+                    color: red
+                }`
+            )
+        );
+
+        it("should work with postcss-nested", () =>
+            test(
+                ".fooga { color: red; :ie8(&) { color: blue; } }",
+                strip`
+                .fooga { color: red; }
+                html>/**/body .fooga { color: blue; }`,
+                nested
+            )
+        );
+    });
+
+    describe(":ie7", function() {
         it("should transform :ie7(...) into an ie7 hack (single selector)", () =>
             test(
                 ":ie7(.fooga) { color: red; }",
