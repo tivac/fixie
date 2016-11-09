@@ -95,6 +95,56 @@ describe("postcss-fixie", function() {
         );
     });
 
+    describe(":ie9plus", function() {
+        it("should transform :ie9plus(...) into an ie9plus hack (single selector)", () =>
+            test(
+                ":ie9plus(.fooga) { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
+                    .fooga {
+                        color: red
+                    }
+                }`
+            )
+        );
+
+        it("should transform :ie9plus(...) into an ie9plus hack (multiple selectors)", () =>
+            test(
+                ":ie9plus(.fooga .booga) { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
+                    .fooga .booga {
+                        color: red
+                    }
+                }`
+            )
+        );
+        
+        it("should transform :ie9plus ... into an ie9plus hack (single selector)", () =>
+            test(
+                ":ie9plus .fooga { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
+                     .fooga {
+                        color: red
+                    }
+                }`
+            )
+        );
+
+        it("should transform :ie9plus ... into an ie9plus hack (multiple selectors)", () =>
+            test(
+                ":ie9plus .fooga .booga { color: red; }",
+                strip`
+                @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
+                     .fooga .booga {
+                        color: red
+                    }
+                }`
+            )
+        );
+    });
+
     describe(":ie9", function() {
         it("should transform :ie9(...) into an ie9 hack (single selector)", () =>
             test(
@@ -137,6 +187,56 @@ describe("postcss-fixie", function() {
                 ":ie9 .fooga .booga { color: red; }",
                 strip`
                 @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) {
+                     .fooga .booga {
+                        color: red
+                    }
+                }`
+            )
+        );
+    });
+
+    describe(":ie8910", function() {
+        it("should transform :ie8910(...) into an ie8910 hack (single selector)", () =>
+            test(
+                ":ie8910(.fooga) { color: red; }",
+                strip`
+                @media screen\\0 {
+                    .fooga {
+                        color: red
+                    }
+                }`
+            )
+        );
+
+        it("should transform :ie8910(...) into an ie8910 hack (multiple selectors)", () =>
+            test(
+                ":ie8910(.fooga .booga) { color: red; }",
+                strip`
+                @media screen\\0 {
+                    .fooga .booga {
+                        color: red
+                    }
+                }`
+            )
+        );
+        
+        it("should transform :ie8910 ... into an ie8910 hack (single selector)", () =>
+            test(
+                ":ie8910 .fooga { color: red; }",
+                strip`
+                @media screen\\0 {
+                     .fooga {
+                        color: red
+                    }
+                }`
+            )
+        );
+
+        it("should transform :ie8910 ... into an ie8910 hack (multiple selectors)", () =>
+            test(
+                ":ie8910 .fooga .booga { color: red; }",
+                strip`
+                @media screen\\0 {
                      .fooga .booga {
                         color: red
                     }

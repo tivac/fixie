@@ -58,6 +58,20 @@ exports["ie10"] = exports["ie10plus"];
 // }`
 // };
 
+exports["ie9plus"] = (rule) => {
+    var media = postcss.atRule({
+            name   : "media",
+            params : "screen and (min-width:0\\0) and (min-resolution: +72dpi)"
+        });
+
+    rule.selector = pseudo("ie9plus", rule.selector);
+
+    media.append(rule);
+    
+    return media;
+};
+
+
 // @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) { <decls> }
 exports["ie9"] = (rule) => {
     var media = postcss.atRule({
@@ -79,6 +93,20 @@ exports["ie9"] = (rule) => {
 //     <%- declarations %>
 // }`
 // };
+
+// @media screen\\0 { <decls> }
+exports["ie8910"] = (rule) => {
+    var media = postcss.atRule({
+            name   : "media",
+            params : "screen\\0"
+        });
+
+    rule.selector = pseudo("ie8910", rule.selector);
+
+    media.append(rule);
+    
+    return media;
+};
 
 // exports["ie8"] = {
 //     type : "selector",
