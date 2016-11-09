@@ -3,13 +3,15 @@
 var postcss  = require("postcss"),
     parser = require("postcss-selector-parser");
 
-function pseudo(version, selector, fn) {
+function strip(rule, version, fn) {
+    var transform;
+    
     if(typeof version === "string") {
         version = new RegExp(version);
     }
     
-    return parser((selectors) =>
-        selectors.walkPseudos((node) => {
+    transform = parser((selectors) =>
+        {selectors.walkPseudos((node) => {
             var name = node.value.slice(1);
             
             if(name.search(version) === -1) {
@@ -17,13 +19,17 @@ function pseudo(version, selector, fn) {
             }
             
             node.replaceWith(fn ? fn(node.nodes) : node.nodes);
-        })
-    ).process(selector).result
+        })}
+    );
+    
+    rule.selector = transform.process(rule.selector).result;
 }
+
+// Hacks are all sourced from http://stackoverflow.com/a/20541859/7847
 
 // _:-ms-fullscreen, :root <selector>
 exports["ie11plus"] = (rule) => {
-    rule.selector = pseudo(/ie11|ie11plus/, rule.selector, (node) =>
+    strip(rule, /ie11|ie11plus/, (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-fullscreen" }),
             parser.string({ value : `:root ${node.toString()}` })
@@ -37,7 +43,7 @@ exports["ie11"] = exports["ie11plus"];
 
 // _:-ms-lang(x), <selector>
 exports["ie10plus"] = (rule) => {
-    rule.selector = pseudo(/ie10|ie10plus/, rule.selector, (node) =>
+    strip(rule, /ie10|ie10plus/, (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-lang(x)" }),
             node
@@ -50,58 +56,42 @@ exports["ie10plus"] = (rule) => {
 
 exports["ie10"] = exports["ie10plus"];
 
-// exports["ie9plus"] = {
-//     type : "media",
-//     tmpl : `/* IE 9+ Hack */
-// @media screen and (min-width:0\\0) and (min-resolution: +72dpi) {
-//   <%- declarations %>
-// }`
-// };
-
+// @media screen and (min-width:0\0) and (min-resolution: +72dpi) { <declarations> }
 exports["ie9plus"] = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen and (min-width:0\\0) and (min-resolution: +72dpi)"
         });
 
-    rule.selector = pseudo("ie9plus", rule.selector);
+    strip(rule, "ie9plus");
 
     media.append(rule);
     
     return media;
 };
 
-
-// @media screen and (min-width:0\\0) and (min-resolution: .001dpcm) { <decls> }
+// @media screen and (min-width:0\0) and (min-resolution: .001dpcm) { <decls> }
 exports["ie9"] = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen and (min-width:0\\0) and (min-resolution: .001dpcm)"
         });
 
-    rule.selector = pseudo("ie9", rule.selector);
+    strip(rule, "ie9");
 
     media.append(rule);
     
     return media;
 };
 
-// exports["ie8910"] = {
-//     type : "media",
-//     tmpl : `/* IE 8/9/10 Hack */
-// @media screen\\0 {
-//     <%- declarations %>
-// }`
-// };
-
-// @media screen\\0 { <decls> }
+// @media screen\0 { <decls> }
 exports["ie8910"] = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen\\0"
         });
 
-    rule.selector = pseudo("ie8910", rule.selector);
+    strip(rule, "ie8910");
 
     media.append(rule);
     
@@ -118,15 +108,39 @@ exports["ie8910"] = (rule) => {
 //     tmpl : `/* IE 7 Hack */ *+html <%- selector %>`
 // };
 
-// exports["ie67"] = {
-//     type : "media",
-//     tmpl : `/* IE 6/7 Hack */
-// @media screen\\9 {
-//     <%- declarations %>
-// }`
-// };
+// @media @media \0screen\,screen\9 { { <decls> }
+exports["ie678"] = (rule) => {
+    var media = postcss.atRule({
+            name   : "media",
+            params : "\\0screen\\,screen\\9"
+        });
 
-// exports["ie6"] = {
-//     type : "selector",
-//     tmpl : `/* IE 6 Hack */ * html <%- selector %>`
-// };
+    strip(rule, "ie678");
+
+    media.append(rule);
+    
+    return media;
+};
+
+// <selector> { *<prop>: <value> }
+exports["ie67"] = (rule) => {
+    strip(rule, "ie67");
+
+    rule.walkDecls((decl) => {
+        decl.prop = `*${decl.prop}`;
+    });
+
+    return rule;
+}
+
+
+// <selector> { _<prop>: <value> }
+exports["ie6"] = (rule) => {
+    strip(rule, "ie6");
+
+    rule.walkDecls((decl) => {
+        decl.prop = `_${decl.prop}`;
+    });
+
+    return rule;
+};
