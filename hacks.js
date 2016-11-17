@@ -122,7 +122,7 @@ exports["ie8910"] = (rule) => {
     return media;
 };
 
-// html>/**/body <selector>
+// @media \0screen { <decls> }
 exports["ie8"] = (rule) => {
     var media = postcss.atRule({
             name   : "media",
