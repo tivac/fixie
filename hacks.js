@@ -22,7 +22,7 @@ function strip(rule, version, fn) {
 // Hacks are all sourced from http://stackoverflow.com/a/20541859/7847
 
 // _:-ms-fullscreen, :root <selector>
-exports["ie11"] = (rule) => {
+exports.ie11 = (rule) => {
     strip(rule, "ie11", (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-fullscreen" }),
@@ -34,7 +34,7 @@ exports["ie11"] = (rule) => {
 };
 
 // _:-ms-lang(x), <selector>
-exports["ie10plus"] = (rule) => {
+exports.ie10plus = (rule) => {
     strip(rule, "ie10plus", (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-lang(x)" }),
@@ -46,7 +46,7 @@ exports["ie10plus"] = (rule) => {
 };
 
 // _:-ms-lang(x), <selector> { <prop>: <value>\9 }
-exports["ie10"] = (rule) => {
+exports.ie10 = (rule) => {
    strip(rule, "ie10", (node) =>
         parser.root().append([
             parser.string({ value : "_:-ms-lang(x)" }),
@@ -63,7 +63,7 @@ exports["ie10"] = (rule) => {
 
 
 // @media screen and (min-width:0\0) { <prop>: <value>\9 }
-exports["ie910"] = (rule) => {
+exports.ie910 = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen and (min-width:0\\0)"
@@ -81,7 +81,7 @@ exports["ie910"] = (rule) => {
 };
 
 // @media screen and (min-width:0\0) and (min-resolution: +72dpi) { <declarations> }
-exports["ie9plus"] = (rule) => {
+exports.ie9plus = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen and (min-width:0\\0) and (min-resolution: +72dpi)"
@@ -95,7 +95,7 @@ exports["ie9plus"] = (rule) => {
 };
 
 // @media screen and (min-width:0\0) and (min-resolution: .001dpcm) { <decls> }
-exports["ie9"] = (rule) => {
+exports.ie9 = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen and (min-width:0\\0) and (min-resolution: .001dpcm)"
@@ -109,7 +109,7 @@ exports["ie9"] = (rule) => {
 };
 
 // @media screen\0 { <decls> }
-exports["ie8910"] = (rule) => {
+exports.ie8910 = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "screen\\0"
@@ -123,7 +123,7 @@ exports["ie8910"] = (rule) => {
 };
 
 // @media \0screen { <decls> }
-exports["ie8"] = (rule) => {
+exports.ie8 = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "\\0screen"
@@ -138,7 +138,7 @@ exports["ie8"] = (rule) => {
 
 
 // *+html <selector>
-exports["ie7"] = (rule) => {
+exports.ie7 = (rule) => {
     strip(rule, "ie7", (node) =>
         parser.root().append(
             parser.string({ value : `*+html ${node}` })
@@ -149,7 +149,7 @@ exports["ie7"] = (rule) => {
 };
 
 // @media @media \0screen\,screen\9 { { <decls> }
-exports["ie678"] = (rule) => {
+exports.ie678 = (rule) => {
     var media = postcss.atRule({
             name   : "media",
             params : "\\0screen\\,screen\\9"
@@ -163,7 +163,7 @@ exports["ie678"] = (rule) => {
 };
 
 // <selector> { *<prop>: <value> }
-exports["ie67"] = (rule) => {
+exports.ie67 = (rule) => {
     strip(rule, "ie67");
 
     rule.walkDecls((decl) => {
@@ -171,11 +171,10 @@ exports["ie67"] = (rule) => {
     });
 
     return rule;
-}
-
+};
 
 // <selector> { _<prop>: <value> }
-exports["ie6"] = (rule) => {
+exports.ie6 = (rule) => {
     strip(rule, "ie6");
 
     rule.walkDecls((decl) => {
