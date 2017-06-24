@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`postcss-fixie :ie6 should transform :ie6(...) into an ie6 hack (multiple declarations) 1`] = `
+".fooga {
+    _color: red;
+    _background: blue
+}"
+`;
+
+exports[`postcss-fixie :ie6 should transform :ie6(...) into an ie6 hack (multiple selectors) 1`] = `
+".fooga .booga {
+    _color: red
+}"
+`;
+
+exports[`postcss-fixie :ie6 should transform :ie6(...) into an ie6 hack (single selector) 1`] = `
+".fooga {
+    _color: red
+}"
+`;
+
+exports[`postcss-fixie :ie6 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+.fooga {
+    _color: blue;
+}"
+`;
+
+exports[`postcss-fixie :ie7 should transform :ie7(...) into an ie7 hack (multiple selectors) 1`] = `
+"*+html .fooga .booga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie7 should transform :ie7(...) into an ie7 hack (single selector) 1`] = `
+"*+html .fooga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie7 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+*+html .fooga {
+    color: blue;
+}"
+`;
+
+exports[`postcss-fixie :ie8 should transform :ie8(...) into an ie8 hack (multiple selectors) 1`] = `
+"@media \\\\0screen {
+    .fooga .booga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie8 should transform :ie8(...) into an ie8 hack (single selector) 1`] = `
+"@media \\\\0screen {
+    .fooga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie8 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media \\\\0screen {
+    .fooga {
+        color: blue;
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9 should transform :ie9(...) into an ie9 hack (multiple selectors) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {
+    .fooga .booga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9 should transform :ie9(...) into an ie9 hack (single selector) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {
+    .fooga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {
+    .fooga {
+        color: blue;
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9plus should transform :ie9plus(...) into an ie9plus hack (multiple selectors) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: +72dpi) {
+    .fooga .booga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9plus should transform :ie9plus(...) into an ie9plus hack (single selector) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: +72dpi) {
+    .fooga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie9plus should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media screen and (min-width:0\\\\0) and (min-resolution: +72dpi) {
+    .fooga {
+        color: blue;
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie10 should transform :ie10(...) into an ie10 hack (multiple selectors) 1`] = `
+"_:-ms-lang(x),.fooga .wooga {
+    color: red\\\\9
+}"
+`;
+
+exports[`postcss-fixie :ie10 should transform :ie10(...) into an ie10 hack (single selector) 1`] = `
+"_:-ms-lang(x),.fooga {
+    color: red\\\\9
+}"
+`;
+
+exports[`postcss-fixie :ie10 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+_:-ms-lang(x),.fooga {
+    color: blue\\\\9;
+}"
+`;
+
+exports[`postcss-fixie :ie10plus should transform :ie10plus(...) into an ie10plus hack (multiple selectors) 1`] = `
+"_:-ms-lang(x),.fooga .wooga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie10plus should transform :ie10plus(...) into an ie10plus hack (single selector) 1`] = `
+"_:-ms-lang(x),.fooga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie10plus should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+_:-ms-lang(x),.fooga {
+    color: blue;
+}"
+`;
+
+exports[`postcss-fixie :ie11 should transform :ie11(...) into an ie11 hack (multiple selectors) 1`] = `
+"_:-ms-fullscreen,:root .fooga .wooga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie11 should transform :ie11(...) into an ie11 hack (single selector) 1`] = `
+"_:-ms-fullscreen,:root .fooga {
+    color: red
+}"
+`;
+
+exports[`postcss-fixie :ie11 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+_:-ms-fullscreen,:root .fooga {
+    color: blue;
+}"
+`;
+
+exports[`postcss-fixie :ie67 should transform :ie67(...) into an ie67 hack (multiple declarations) 1`] = `
+".fooga {
+    *color: red;
+    *background: blue
+}"
+`;
+
+exports[`postcss-fixie :ie67 should transform :ie67(...) into an ie67 hack (multiple selectors) 1`] = `
+".fooga .booga {
+    *color: red
+}"
+`;
+
+exports[`postcss-fixie :ie67 should transform :ie67(...) into an ie67 hack (single selector) 1`] = `
+".fooga {
+    *color: red
+}"
+`;
+
+exports[`postcss-fixie :ie67 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+.fooga {
+    *color: blue;
+}"
+`;
+
+exports[`postcss-fixie :ie678 should transform :ie678(...) into an ie678 hack (multiple selectors) 1`] = `
+"@media \\\\0screen\\\\,screen\\\\9 {
+    .fooga .booga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie678 should transform :ie678(...) into an ie678 hack (single selector) 1`] = `
+"@media \\\\0screen\\\\,screen\\\\9 {
+    .fooga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie678 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media \\\\0screen\\\\,screen\\\\9 {
+    .fooga {
+        color: blue;
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie910 should transform :ie910(...) into an ie910 (multiple selectors) 1`] = `
+"@media screen and (min-width:0\\\\0) {
+    .fooga .booga {
+        color: red\\\\9
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie910 should transform :ie910(...) into an ie910 (single selector) 1`] = `
+"@media screen and (min-width:0\\\\0) {
+    .fooga {
+        color: red\\\\9
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie910 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media screen and (min-width:0\\\\0) {
+    .fooga {
+        color: blue\\\\9;
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie8910 should transform :ie8910(...) into an ie8910 hack (multiple selectors) 1`] = `
+"@media screen\\\\0 {
+    .fooga .booga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie8910 should transform :ie8910(...) into an ie8910 hack (single selector) 1`] = `
+"@media screen\\\\0 {
+    .fooga {
+        color: red
+    }
+}"
+`;
+
+exports[`postcss-fixie :ie8910 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+@media screen\\\\0 {
+    .fooga {
+        color: blue;
+    }
+}"
+`;
