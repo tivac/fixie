@@ -1,7 +1,7 @@
 "use strict";
 
-var postcss  = require("postcss"),
-    parser = require("postcss-selector-parser");
+var postcss = require("postcss"),
+    parser  = require("postcss-selector-parser");
 
 function strip(rule, version, fn) {
     var transform = parser((selectors) =>
