@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie10 should transform :ie10(...) into an ie10 hack (multiple selectors) 1`] = `
+"_:-ms-lang(x),.fooga .wooga {
+    color: red\\\\9;
+}"
+`;
+
+exports[`:ie10 should transform :ie10(...) into an ie10 hack (single selector) 1`] = `
+"_:-ms-lang(x),.fooga {
+    color: red\\\\9;
+}"
+`;
+
+exports[`:ie10 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    _:-ms-lang(x),.fooga {
+        color: blue\\\\9;
+    }"
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie8910 should transform :ie8910(...) into an ie8910 hack (multiple selectors) 1`] = `
+"@media screen\\\\0 {.fooga .booga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie8910 should transform :ie8910(...) into an ie8910 hack (single selector) 1`] = `
+"@media screen\\\\0 {.fooga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie8910 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    @media screen\\\\0 {
+    
+    .fooga {
+        color: blue;
+    }
+}"
+`;

@@ -5,6 +5,7 @@
   "main": "index.js",
   "repository": "tivac/fixie",
   "scripts": {
+    "precommit": "lint-staged",
     "lint": "eslint .",
     "test": "jest",
     "posttest": "npm run lint"
@@ -20,24 +21,36 @@
   "license": "MIT",
   "devDependencies": {
     "dedent": "^0.7.0",
-    "eslint": "^4.1.0",
+    "eslint": "^4.10.0",
     "eslint-config-arenanet": "^3.3.1",
-    "jest": "^20.0.4",
-    "postcss-nested": "^1.0.0"
+    "eslint-plugin-no-only-tests": "^2.0.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^4.3.0",
+    "postcss-nested": "^2.1.2"
   },
   "dependencies": {
-    "postcss": "^5.2.17",
-    "postcss-selector-parser": "^2.2.3"
+    "postcss": "^6.0.13",
+    "postcss-selector-parser": "^3.1.0"
   },
   "eslintConfig": {
     "extends": "arenanet",
     "env": {
       "node": true,
-      "mocha": true,
       "jest": true
     },
+    "plugins": [
+      "no-only-tests"
+    ],
     "rules": {
-      "indent": "off"
+      "indent": "off",
+      "no-only-tests/no-only-tests": "error"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

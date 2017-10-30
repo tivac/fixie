@@ -6,10 +6,10 @@ var postcss = require("postcss"),
 
     search = new RegExp(`:(${Object.keys(hacks).join(")|:(")})`);
 
-module.exports = postcss.plugin("postcss-fixie", () => (css) => {
-    css.walkRules(search, (rule) => {
+module.exports = postcss.plugin("postcss-fixie", () => (root) => {
+    root.walkRules(search, (rule) => {
         var version = rule.selector.match(search)[0].substring(1);
 
-        rule.replaceWith(hacks[version](rule));
+        rule.replaceWith(hacks[version](rule.clone()));
     });
 });

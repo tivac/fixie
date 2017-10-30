@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie8 should transform :ie8(...) into an ie8 hack (multiple selectors) 1`] = `
+"@media \\\\0screen {.fooga .booga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie8 should transform :ie8(...) into an ie8 hack (single selector) 1`] = `
+"@media \\\\0screen {.fooga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie8 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    @media \\\\0screen {
+    
+    .fooga {
+        color: blue;
+    }
+}"
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie678 should transform :ie678(...) into an ie678 hack (multiple selectors) 1`] = `
+"@media \\\\0screen\\\\,screen\\\\9 {.fooga .booga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie678 should transform :ie678(...) into an ie678 hack (single selector) 1`] = `
+"@media \\\\0screen\\\\,screen\\\\9 {.fooga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie678 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    @media \\\\0screen\\\\,screen\\\\9 {
+    
+    .fooga {
+        color: blue;
+    }
+}"
+`;

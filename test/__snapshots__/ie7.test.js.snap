@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie7 should transform :ie7(...) into an ie7 hack (multiple selectors) 1`] = `
+"*+html .fooga .booga {
+    color: red;
+}"
+`;
+
+exports[`:ie7 should transform :ie7(...) into an ie7 hack (single selector) 1`] = `
+"*+html .fooga {
+    color: red;
+}"
+`;
+
+exports[`:ie7 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    *+html .fooga {
+        color: blue;
+    }"
+`;

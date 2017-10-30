@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie9 should transform :ie9(...) into an ie9 hack (multiple selectors) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {.fooga .booga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie9 should transform :ie9(...) into an ie9 hack (single selector) 1`] = `
+"@media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {.fooga {
+    color: red;
+}
+}"
+`;
+
+exports[`:ie9 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    @media screen and (min-width:0\\\\0) and (min-resolution: .001dpcm) {
+    
+    .fooga {
+        color: blue;
+    }
+}"
+`;

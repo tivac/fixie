@@ -16,7 +16,7 @@ function strip(rule, version, fn) {
             })
         );
     
-    rule.selector = transform.process(rule.selector).result;
+    rule.selector = transform.processSync(rule.selector);
 }
 
 // Hacks are all sourced from http://stackoverflow.com/a/20541859/7847

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie910 should transform :ie910(...) into an ie910 (multiple selectors) 1`] = `
+"@media screen and (min-width:0\\\\0) {.fooga .booga {
+    color: red\\\\9;
+}
+}"
+`;
+
+exports[`:ie910 should transform :ie910(...) into an ie910 (single selector) 1`] = `
+"@media screen and (min-width:0\\\\0) {.fooga {
+    color: red\\\\9;
+}
+}"
+`;
+
+exports[`:ie910 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    @media screen and (min-width:0\\\\0) {
+    
+    .fooga {
+        color: blue\\\\9;
+    }
+}"
+`;

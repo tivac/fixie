@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`:ie6 should transform :ie6(...) into an ie6 hack (multiple declarations) 1`] = `".fooga { _color: red; _background: blue; }"`;
+
+exports[`:ie6 should transform :ie6(...) into an ie6 hack (multiple selectors) 1`] = `
+".fooga .booga {
+    _color: red;
+}"
+`;
+
+exports[`:ie6 should transform :ie6(...) into an ie6 hack (single selector) 1`] = `
+".fooga {
+    _color: red;
+}"
+`;
+
+exports[`:ie6 should work with postcss-nested 1`] = `
+".fooga {
+    color: red;
+}
+    
+    .fooga {
+        _color: blue;
+    }"
+`;
