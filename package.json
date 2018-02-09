@@ -27,7 +27,7 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lint-staged": "^4.3.0",
-    "postcss-nested": "^2.1.2"
+    "postcss-nested": "^3.0.0"
   },
   "dependencies": {
     "postcss": "^6.0.13",
