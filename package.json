@@ -30,7 +30,7 @@
     "postcss-nested": "^3.0.0"
   },
   "dependencies": {
-    "postcss": "^6.0.13",
+    "postcss": "^7.0.2",
     "postcss-selector-parser": "^4.0.0"
   },
   "eslintConfig": {
